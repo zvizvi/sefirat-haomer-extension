@@ -1,0 +1,6 @@
+@font-face {
+  font-family: 'SBL hebrew';
+  font-style: normal;
+  font-weight: 400;
+  src: local('SBL hebrew'), url('/fonts/sbl/SBL_Hbrw.ttf') format('truetype'), url('/fonts/sbl/SBL_Hbrw.eot') format('opentype');
+}
