@@ -11,8 +11,8 @@ $(document).ready(function () {
     '2a': 'שְׁנַיִם',
     '3': 'שְׁלֹשָׁה',
     '4': 'אַרְבָּעָה',
-    '5': 'חַמִשָׁה',
-    '6': 'שִׁשָׁה',
+    '5': 'חֲמִשָּׁה',
+    '6': 'שִׁשָּׁה',
     '7': 'שִׁבְעָה',
     '8': 'שְׁמוֹנָה',
     '9': 'תִּשְׁעָה',
@@ -28,40 +28,42 @@ $(document).ready(function () {
   moment.locale('he');
 
   function setupDate () {
-    today = moment().add(0, 'days').toISOString();
+    today = moment().toISOString();
+    // today = moment().add(0, 'days').toISOString();
     todayHebrewObj = Hebcal.HDate(new Date(today));
     todayHebrew = todayHebrewObj.toString('h');
     todayOmer = todayHebrewObj.omer();
 
-    $('.week-day').text('יום ' + moment().format('dddd'));
+    $('.week-day').text('יום ' + moment(today).format('dddd'));
     $('.hebrew-date').text(todayHebrew);
   }
 
-  function getDays () {
-    // console.log(today);
-    // console.log(todayHebrewObj);
-    // console.log(todayHebrew);
-    // console.log(todayOmer);
+  function getDays (number) {
     var day;
 
-    if (todayOmer === 1) {
+    if (number === 1) {
       day = 'יוֹם אֶחָד';
-    } else if (todayOmer < 10) {
-      day = numberLetterList[todayOmer] + ' יָמִים';
-    } else if (todayOmer === 10) {
+    } else if (number < 10) {
+      day = numberLetterList[number] + ' יָמִים';
+    } else if (number === 10) {
       day = 'עַשָׂרָה יָמִים';
     } else {
-      if ([11, 12, 20, 30, 40].indexOf(todayOmer) >= 0) {
-        day = numberLetterList[todayOmer];
+      if ([11, 12, 20, 30, 40].indexOf(number) >= 0) {
+        day = numberLetterList[number];
       } else {
-        var stringNumber = todayOmer.toString();
+        var stringNumber = number.toString();
         day = (numberLetterList[stringNumber[1] + 'a'] || numberLetterList[stringNumber[1]]);
         day += ' ';
-        day += (stringNumber[0] === '3') ? 'וּ' : (todayOmer > 20) ? 'וְ' : '';
+        day += (stringNumber[0] === '3') ? 'וּ' : (number > 20) ? 'וְ' : '';
         day += numberLetterList[stringNumber[0] + '0'];
       }
       day += ' יוֹם';
     }
+    return day;
+  }
+
+  function setupDays () {
+    var day = getDays(todayOmer);
     $('.day').text(day);
   }
 
@@ -69,7 +71,28 @@ $(document).ready(function () {
     if (todayOmer < 7) {
       return;
     }
-    var week = 'שֶׁהֵם שָׁבוּעַ אֶחָד וּשְׁנֵי יָמִים';
+    var weeks = Math.floor(todayOmer / 7);
+    var leftDays = (todayOmer % 7);
+    var week = 'שֶׁהֵם ';
+
+    if (weeks === 1) {
+      week += 'שָׁבוּעַ אֶחָד ';
+    } else {
+      week += numberLetterList[weeks];
+      week += ' שָׁבוּעוֹת';
+    }
+
+    if (leftDays) {
+      week += ' ';
+      if (leftDays === 5) {
+        week += 'וַ';
+      } else if ([2, 3].indexOf(leftDays) >= 0) {
+        week += 'וּ';
+      } else {
+        week += 'וְ';
+      }
+      week += getDays(leftDays);
+    }
     $('.week').text(week);
   }
 
@@ -90,7 +113,7 @@ $(document).ready(function () {
     return;
   }
 
-  getDays();
+  setupDays();
   getWeeks();
   getSefira();
 });
