@@ -1,5 +1,9 @@
 // popup.js
 $(document).ready(function () {
+  $(document).on('contextmenu', function (e) {
+    e.preventDefault();
+  });
+
   var moment = window.moment;
   var Hebcal = window.Hebcal;
 
