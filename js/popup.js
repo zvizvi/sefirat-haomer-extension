@@ -7,7 +7,7 @@ $(document).ready(function () {
 
   var moment = window.moment;
   var Hebcal = window.Hebcal;
-  var today, todayHebrewObj, todayHebrew, todayOmer;
+  var today, todayHebrewObj, isAfterSunset, todayHebrew, todayOmer;
 
   var numberLetterList = {
     '1': 'אֶחָד',
@@ -32,13 +32,24 @@ $(document).ready(function () {
   moment.locale('he');
 
   function setupDate () {
-    today = moment().toISOString();
-    // today = moment().add(0, 'days').toISOString();
-    todayHebrewObj = Hebcal.HDate(new Date(today));
+    today = moment();
+    // today = moment().add(0, 'days');
+    todayHebrewObj = Hebcal.HDate(new Date(today.toISOString()));
+    todayHebrewObj.setLocation(31.783, 35.233); // Jerusalem
+
+    isAfterSunset = today.isAfter(todayHebrewObj.sunset());
+    if (isAfterSunset) {
+      today = today.add(1, 'days');
+      todayHebrewObj = Hebcal.HDate(new Date(today.toISOString()));
+      todayHebrewObj.setLocation(31.783, 35.233); // Jerusalem
+    }
+
     todayHebrew = todayHebrewObj.toString('h');
     todayOmer = todayHebrewObj.omer();
 
-    $('.week-day').text('יום ' + moment(today).format('dddd'));
+    var weekDay = isAfterSunset || today.hour() < 5 ? 'אור ל' : '';
+    weekDay += 'יום ' + today.format('dddd');
+    $('.week-day').text(weekDay);
     $('.hebrew-date').text(todayHebrew);
     chrome.browserAction.setBadgeText({ text: todayOmer.toString() });
   }
@@ -102,7 +113,6 @@ $(document).ready(function () {
   }
 
   function getSefira () {
-    console.log(Math.floor(todayOmer % 7));
     var todaySefira = (sefiraList[(todayOmer % 7) - 1] || sefiraList[6]);
     todaySefira += ' שב';
     if (todayOmer % 7) {
