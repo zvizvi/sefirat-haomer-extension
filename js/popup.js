@@ -65,6 +65,14 @@ $(document).ready(function () {
     $('.day').text(day);
   }
 
+  function getWeeks () {
+    if (todayOmer < 7) {
+      return;
+    }
+    var week = 'שֶׁהֵם שָׁבוּעַ אֶחָד וּשְׁנֵי יָמִים';
+    $('.week').text(week);
+  }
+
   function getSefira () {
     console.log(Math.floor(todayOmer % 7));
     var todaySefira = (sefiraList[(todayOmer % 7) - 1] || sefiraList[6]);
@@ -81,6 +89,8 @@ $(document).ready(function () {
   if (!todayOmer) {
     return;
   }
+
   getDays();
+  getWeeks();
   getSefira();
 });

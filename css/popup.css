@@ -29,6 +29,10 @@ body {
   display: inline-block;
 }
 
+.content span:empty {
+  display: none;
+}
+
 .footer {
   padding: 5px 0 15px;
   text-align: center;
