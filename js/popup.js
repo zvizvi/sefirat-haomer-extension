@@ -1,4 +1,5 @@
-// popup.js
+/* global chrome */
+
 $(document).ready(function () {
   $(document).on('contextmenu', function (e) {
     e.preventDefault();
@@ -39,9 +40,7 @@ $(document).ready(function () {
 
     $('.week-day').text('יום ' + moment(today).format('dddd'));
     $('.hebrew-date').text(todayHebrew);
-
     chrome.browserAction.setBadgeText({ text: todayOmer.toString() });
-    chrome.browserAction.setBadgeBackgroundColor({ color: '#666' });
   }
 
   function getDays (number) {

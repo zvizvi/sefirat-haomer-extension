@@ -3,11 +3,6 @@
   "name": "ספירת העומר",
   "version": "0.0.1",
   "author": "zvizvi5@outlook.com",
-  "permissions": [
-    "storage",
-    "webRequest",
-    "webRequestBlocking"
-  ],
   "browser_action": {
     "default_icon": "img/icon16.png",
     "default_popup": "popup.html"
@@ -20,6 +15,12 @@
     "48": "img/icon48.png",
     "24": "img/icon24.png",
     "16": "img/icon16.png"
+  },
+  "background": {
+    "scripts": [
+      "assets/hebcal/hebcal.noloc.js",
+      "js/background.js"
+    ]
   },
   "manifest_version": 2
 }
