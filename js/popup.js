@@ -6,7 +6,6 @@ $(document).ready(function () {
 
   var moment = window.moment;
   var Hebcal = window.Hebcal;
-
   var today, todayHebrewObj, todayHebrew, todayOmer;
 
   var numberLetterList = {
@@ -40,6 +39,9 @@ $(document).ready(function () {
 
     $('.week-day').text('יום ' + moment(today).format('dddd'));
     $('.hebrew-date').text(todayHebrew);
+
+    chrome.browserAction.setBadgeText({ text: todayOmer.toString() });
+    chrome.browserAction.setBadgeBackgroundColor({ color: '#666' });
   }
 
   function getDays (number) {
