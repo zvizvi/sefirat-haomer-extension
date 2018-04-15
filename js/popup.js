@@ -38,17 +38,19 @@ $(document).ready(function () {
 
   moment.locale('he');
 
-  function setupDate () {
-    today = moment();
-    // today = moment().add(0, 'days');
+  function setupHebrewDate () {
     todayHebrewObj = Hebcal.HDate(new Date(today.toISOString()));
     todayHebrewObj.setLocation(31.783, 35.233); // Jerusalem
+  }
+
+  function setupDate () {
+    today = moment();
+    setupHebrewDate();
 
     isAfterSunset = today.isAfter(todayHebrewObj.sunset());
     if (isAfterSunset) {
       today = today.add(1, 'days');
-      todayHebrewObj = Hebcal.HDate(new Date(today.toISOString()));
-      todayHebrewObj.setLocation(31.783, 35.233); // Jerusalem
+      setupHebrewDate();
     }
 
     todayHebrew = todayHebrewObj.toString('h');
@@ -134,21 +136,30 @@ $(document).ready(function () {
     $('.sefira').text(todaySefira);
   }
 
-  setupDate();
-  if (!todayOmer) {
-    $('.omer').addClass('hide');
-    $('.no-omer').removeClass('hide');
-    return;
-  } else {
-    $('.omer').removeClass('hide');
-    $('.no-omer').addClass('hide');
+  function toggleNoOmer () {
+    if (!todayOmer) {
+      $('.omer').addClass('hide');
+      $('.no-omer').removeClass('hide');
+    } else {
+      $('.omer').removeClass('hide');
+      $('.no-omer').addClass('hide');
+    }
   }
 
+  function lagBaomer () {
+    if (todayOmer === 33) {
+      $('.header').prepend('<span class="lag-baomer"><span class="fire">🔥</span> ל"ג בעומר</span>');
+    }
+  }
+
+  setupDate();
+  toggleNoOmer();
   chrome.storage.sync.get('options', function (storage) {
     options = storage.options || defaultOptions;
 
     setupDays();
     getWeeks();
     getSefira();
+    lagBaomer();
   });
 });

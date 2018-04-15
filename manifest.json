@@ -1,7 +1,7 @@
 {
   "update_url": "https://clients2.google.com/service/update2/crx",
   "name": "ספירת העומר",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "zvizvi",
   "browser_action": {
     "default_icon": "img/icon16.png",
@@ -24,7 +24,8 @@
   },
   "background": {
     "scripts": [
-      "assets/hebcal/hebcal.noloc.js",
+      "assets/moment/moment-with-locales.min.js",
+      "assets/hebcal/hebcal.noloc.min.js",
       "js/background.js"
     ]
   },
