@@ -38,17 +38,19 @@ $(document).ready(function () {
 
   moment.locale('he');
 
-  function setupDate () {
-    today = moment();
-    // today = moment().add(0, 'days');
+  function setupHebrewDate () {
     todayHebrewObj = Hebcal.HDate(new Date(today.toISOString()));
     todayHebrewObj.setLocation(31.783, 35.233); // Jerusalem
+  }
+
+  function setupDate () {
+    today = moment();
+    setupHebrewDate();
 
     isAfterSunset = today.isAfter(todayHebrewObj.sunset());
     if (isAfterSunset) {
       today = today.add(1, 'days');
-      todayHebrewObj = Hebcal.HDate(new Date(today.toISOString()));
-      todayHebrewObj.setLocation(31.783, 35.233); // Jerusalem
+      setupHebrewDate();
     }
 
     todayHebrew = todayHebrewObj.toString('h');
