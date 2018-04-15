@@ -26,3 +26,11 @@ function setup () {
   setTimeout(setup, 43200000); // 12 hours.
 }
 setup();
+
+function setCron () {
+  setTimeout(function () {
+    setup();
+    setCron();
+  }, todayHebrewObj.sunset() - new Date());
+}
+setCron();
