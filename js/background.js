@@ -1,7 +1,6 @@
 /* global chrome */
 var moment = window.moment;
 var Hebcal = window.Hebcal;
-var later = window.later;
 
 var today, todayHebrewObj, isAfterSunset, omer;
 
