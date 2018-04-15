@@ -47,3 +47,19 @@ body {
 .hide {
   display: none;
 }
+
+.options {
+  display: inline-block;
+  position: absolute;
+  font-size: 20px;
+  right: 10px;
+  top: 5px;
+  color: #aaa;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+body:hover .options {
+  opacity: 1;
+}

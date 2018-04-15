@@ -1,0 +1,36 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 15px 10px;
+  text-align: center;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.content {
+  min-height: 150px;
+}
+
+.option-block {
+  font-size: 16px;
+  text-align: right;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.label-container {
+  padding: 10px 0;
+}
+
+.option-block select {
+  font-size: 16px;
+}
+
+button {
+  font-size: 16px;
+}
+
+.hide {
+  display: none;
+}
+
