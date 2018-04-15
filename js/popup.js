@@ -5,9 +5,16 @@ $(document).ready(function () {
     e.preventDefault();
   });
 
+  $('.options').on('click', function (e) {
+    chrome.runtime.openOptionsPage();
+  });
+
   var moment = window.moment;
   var Hebcal = window.Hebcal;
-  var today, todayHebrewObj, isAfterSunset, todayHebrew, todayOmer;
+  var options, today, todayHebrewObj, isAfterSunset, todayHebrew, todayOmer;
+  var defaultOptions = {
+    nusach: 'sf'
+  };
 
   var numberLetterList = {
     '1': 'אֶחָד',
@@ -81,7 +88,8 @@ $(document).ready(function () {
 
   function setupDays () {
     var day = getDays(todayOmer);
-    $('.day').text(day);
+    var suffix = (options.nusach === 'em' ? ' לָעוֹמֶר' : '');
+    $('.day').text(day + suffix);
   }
 
   function getWeeks () {
@@ -110,7 +118,9 @@ $(document).ready(function () {
       }
       week += getDays(leftDays);
     }
-    $('.week').text(week);
+
+    var suffix = (options.nusach === 'sf' ? ' לָעוֹמֶר' : options.nusach === 'as' ? ' בָּעוֹמֶר' : '');
+    $('.week').text(week + suffix);
   }
 
   function getSefira () {
@@ -134,7 +144,11 @@ $(document).ready(function () {
     $('.no-omer').addClass('hide');
   }
 
-  setupDays();
-  getWeeks();
-  getSefira();
+  chrome.storage.sync.get('options', function (storage) {
+    options = storage.options || defaultOptions;
+
+    setupDays();
+    getWeeks();
+    getSefira();
+  });
 });
