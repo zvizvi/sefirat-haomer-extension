@@ -24,6 +24,7 @@
   },
   "background": {
     "scripts": [
+      "assets/later/later.min.js",
       "assets/moment/moment-with-locales.min.js",
       "assets/hebcal/hebcal.noloc.min.js",
       "js/background.js"
