@@ -12,6 +12,17 @@ body {
   text-align: left;
 }
 
+.lag-baomer {
+  float: right;
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.lag-baomer .fire {
+  display: inline-block;
+  margin-left: 5px;
+}
+
 .bullet {
   display: inline-block;
   margin: 0 5px;
