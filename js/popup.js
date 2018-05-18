@@ -126,6 +126,9 @@ $(document).ready(function () {
   }
 
   function getSefira () {
+    if (!todayOmer) {
+      return;
+    }
     var todaySefira = (sefiraList[(todayOmer % 7) - 1] || sefiraList[6]);
     todaySefira += ' שב';
     if (todayOmer % 7) {
