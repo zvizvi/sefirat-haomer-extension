@@ -51,7 +51,8 @@ $(document).ready(function () {
     weekDay += 'יום ' + today.format('dddd');
     $('.week-day').text(weekDay);
     $('.hebrew-date').text(todayHebrew);
-    chrome.browserAction.setBadgeText({ text: todayOmer.toString() });
+
+    chrome.browserAction.setBadgeText({ text: todayOmer ? todayOmer.toString() : '' });
   }
 
   function getDays (number) {
@@ -125,7 +126,12 @@ $(document).ready(function () {
 
   setupDate();
   if (!todayOmer) {
+    $('.omer').addClass('hide');
+    $('.no-omer').removeClass('hide');
     return;
+  } else {
+    $('.omer').removeClass('hide');
+    $('.no-omer').addClass('hide');
   }
 
   setupDays();
