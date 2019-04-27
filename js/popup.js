@@ -88,13 +88,19 @@ $(document).ready(function () {
     return day;
   }
 
-  function setupDays () {
+  function writeDays () {
     var day = getDays(todayOmer);
-    var suffix = (options.nusach === 'em' ? ' לָעוֹמֶר' : '');
+    var suffix = '';
+    if (todayOmer && todayOmer < 7) {
+      suffix = options.nusach === 'sf' ? ' לָעוֹמֶר' : options.nusach === 'as' ? ' בָּעוֹמֶר' : '';
+    }
+    if (options.nusach === 'em') {
+      suffix = ' לָעוֹמֶר';
+    }
     $('.day').text(day + suffix);
   }
 
-  function getWeeks () {
+  function writeWeeks () {
     if (todayOmer < 7) {
       return;
     }
@@ -160,8 +166,8 @@ $(document).ready(function () {
   chrome.storage.sync.get('options', function (storage) {
     options = storage.options || defaultOptions;
 
-    setupDays();
-    getWeeks();
+    writeDays();
+    writeWeeks();
     getSefira();
     lagBaomer();
   });
