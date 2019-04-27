@@ -15,7 +15,13 @@ body {
   font-size: 16px;
   text-align: right;
   padding: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.text-block {
+  padding: 0 10px;
+  font-size: 12px;
+  margin-bottom: 20px;
 }
 
 .label-container {
