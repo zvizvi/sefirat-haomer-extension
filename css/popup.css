@@ -55,6 +55,23 @@ body {
   padding-top: 10px;
 }
 
+.website-link a {
+  display: inline-block;
+  padding: 1px 14px 2px;
+  border-radius: 4px;
+  border: solid 1px #ccc;
+  color: #555;
+  font-size: 14px;
+  margin-top: 20px;
+  text-decoration: none;
+  background: #fafafa;
+}
+
+.website-link a:hover,
+.website-link a:active {
+  background: #fff;
+}
+
 .hide {
   display: none;
 }

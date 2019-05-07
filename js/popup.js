@@ -152,6 +152,7 @@ $(document).ready(function () {
     } else {
       $('.omer').removeClass('hide');
       $('.no-omer').addClass('hide');
+      $('.website-link').removeClass('hide');
     }
   }
 
@@ -170,5 +171,7 @@ $(document).ready(function () {
     writeWeeks();
     getSefira();
     lagBaomer();
+
+    $('.website-link a').attr('href', $('.website-link a').attr('href') + options.nusach);
   });
 });
