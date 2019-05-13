@@ -15,7 +15,7 @@ body {
   font-size: 16px;
   text-align: right;
   padding: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .text-block {
@@ -25,11 +25,15 @@ body {
 }
 
 .label-container {
-  padding: 10px 0;
+  display: inline-block;
+  padding: 0;
+  min-width: 130px;
+  vertical-align: middle;
 }
 
 .option-block select {
   font-size: 16px;
+  vertical-align: middle;
 }
 
 button {

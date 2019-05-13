@@ -2,7 +2,9 @@
 
 // Current options extend defaults
 let defaultOptions = {
-  nusach: 'sf'
+  nusach: 'sf',
+  city: 'jerusalem',
+  notification: false
 };
 let options;
 
@@ -45,6 +47,7 @@ const show = function (options) {
       }
     }
   }
+  toggleTimeField();
 };
 
 // Reset to defaults
@@ -60,9 +63,10 @@ document.addEventListener('change', (event) => {
   switch (event.target.type) {
     case ('checkbox'): {
       options[event.target.id] = event.target.checked;
+      toggleTimeField();
       break;
     }
-    case ('select-one'): {
+    case ('time'): {
       options[event.target.id] = event.target.value;
       break;
     }
@@ -77,5 +81,9 @@ document.addEventListener('click', (event) => {
     reset();
   }
 });
+
+function toggleTimeField () {
+  document.querySelector('.notification-time-block').style.display = options.notification ? 'block' : 'none';
+}
 
 load();

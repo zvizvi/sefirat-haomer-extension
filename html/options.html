@@ -12,16 +12,38 @@
 <body>
   <div class="content">
     <div class="option-block nusach-block">
-      <div class="label-container">
-        <label for="nusach">בחר נוסח:</label>
-      </div>
+      <span class="label-container">
+        <label for="nusach">בחר נוסח</label>
+      </span>
       <select id="nusach">
         <option value="sf">ספרד</option>
         <option value="as">אשכנז</option>
         <option value="em">עדות המזרח</option>
       </select>
     </div>
-    <div class="text-block">הספירת מתחלפת כל יום בעת זמן שקיעת החמה בעיר ירושלים</div>
+    <div class="option-block city-block">
+      <span class="label-container">
+        <label for="jerusalem">בחר עיר
+          <div><small><small>לקביעת שעת השקיעה</small></small></div>
+        </label>
+      </span>
+      <select id="city">
+        <option value="jerusalem">ירושלים</option>
+      </select>
+    </div>
+    <div class="option-block notification-block">
+      <span class="label-container">
+        <label for="notification">הצג התראה</label>
+      </span>
+      <input type="checkbox" name="notification" id="notification">
+    </div>
+    <div class="option-block notification-time-block">
+      <span class="label-container">
+        <label for="notification-time">שעת התראה</label>
+      </span>
+      <input type="time" name="notification-time" id="notification-time" />
+    </div>
+    <div class="text-block">הספירת מתחלפת כל יום בעת זמן שקיעת החמה</div>
     <div class="text-block">לפניות והערות <a href="mailto:zvizvi5@outlook.com">zvizvi5@outlook.com</a></div>
   </div>
   <!-- <button type="button"
