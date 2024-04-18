@@ -8,11 +8,11 @@ document.querySelector('.options').addEventListener('click', function (e) {
   chrome.runtime.openOptionsPage();
 });
 
+const { HDate, GeoLocation, Zmanim, HebrewCalendar } = window.hebcal;
 const dayjs = window.dayjs;
-const Hebcal = window.Hebcal;
 dayjs.locale('he');
 
-let options, today, todayHebrewObj, isAfterSunset, todayHebrew, todayOmer;
+let options, todayOmer;
 const defaultOptions = {
   nusach: 'sf'
 };
@@ -37,25 +37,28 @@ const numberLetterList = {
 };
 const sefiraList = ['חסד', 'גבורה', 'תפארת', 'נצח', 'הוד', 'יסוד', 'מלכות'];
 
-function setupHebrewDate () {
-  todayHebrewObj = Hebcal.HDate(today.toDate());
-  todayHebrewObj.setLocation(31.783, 35.233); // Jerusalem
-}
-
 function setupDate () {
-  today = dayjs();
-  setupHebrewDate();
-
-  isAfterSunset = today.isAfter(todayHebrewObj.sunset());
+  const now = dayjs();
+  let today = now.startOf('day');
+  const gloc = new GeoLocation('Jerusalem', 31.783, 35.233, 0, 'Asia/Jerusalem');
+  const zmanim = new Zmanim(gloc, now.toDate());
+  const sunset = zmanim.sunset();
+  const isAfterSunset = now.isAfter(sunset);
   if (isAfterSunset) {
     today = today.add(1, 'days');
-    setupHebrewDate();
   }
+  todayOmer = HebrewCalendar.calendar({
+    start: today.toDate(),
+    end: today.toDate(),
+    omer: true
+  })
+    .find((event) => event.omer)
+    ?.omer;
 
-  todayHebrew = todayHebrewObj.toString('h');
-  todayOmer = todayHebrewObj.omer();
+  const todayHebrewObj = new HDate(today.toDate());
+  const todayHebrew = todayHebrewObj.renderGematriya(true);
 
-  let weekDay = isAfterSunset || today.hour() < 5 ? 'אור ל' : '';
+  let weekDay = isAfterSunset || now.hour() < 5 ? 'אור ל' : '';
   weekDay += 'יום ' + today.format('dddd');
   document.querySelector('.week-day').textContent = weekDay;
   document.querySelector('.hebrew-date').textContent = todayHebrew;
@@ -64,6 +67,9 @@ function setupDate () {
 }
 
 function getDays (number) {
+  if (!number) {
+    return '';
+  }
   let day;
 
   if (number === 1) {
