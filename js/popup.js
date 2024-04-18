@@ -8,8 +8,10 @@ document.querySelector('.options').addEventListener('click', function (e) {
   chrome.runtime.openOptionsPage();
 });
 
-const moment = window.moment;
+const dayjs = window.dayjs;
 const Hebcal = window.Hebcal;
+dayjs.locale('he');
+
 let options, today, todayHebrewObj, isAfterSunset, todayHebrew, todayOmer;
 const defaultOptions = {
   nusach: 'sf'
@@ -35,15 +37,13 @@ const numberLetterList = {
 };
 const sefiraList = ['חסד', 'גבורה', 'תפארת', 'נצח', 'הוד', 'יסוד', 'מלכות'];
 
-moment.locale('he');
-
 function setupHebrewDate () {
-  todayHebrewObj = Hebcal.HDate(new Date(today.toISOString()));
+  todayHebrewObj = Hebcal.HDate(today.toDate());
   todayHebrewObj.setLocation(31.783, 35.233); // Jerusalem
 }
 
 function setupDate () {
-  today = moment();
+  today = dayjs();
   setupHebrewDate();
 
   isAfterSunset = today.isAfter(todayHebrewObj.sunset());
