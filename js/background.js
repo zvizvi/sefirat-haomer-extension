@@ -1,25 +1,28 @@
-/* global chrome */
-const moment = window.moment;
-const Hebcal = window.Hebcal;
+/* globals chrome importScripts dayjs hebcal */
+importScripts('../assets/dayjs/dayjs.min.js');
+importScripts('../assets/@hebcal/core/dist/bundle.min.js');
 
-let today, todayHebrewObj, isAfterSunset, omer;
+const { GeoLocation, Zmanim, HebrewCalendar } = hebcal;
 
-function setupHebrewDate () {
-  todayHebrewObj = Hebcal.HDate(new Date(today.toISOString()));
-  todayHebrewObj.setLocation(31.783, 35.233); // Jerusalem
-}
+let sunset;
 
 function setup () {
-  today = moment();
-  setupHebrewDate();
-
-  isAfterSunset = today.isAfter(todayHebrewObj.sunset());
+  const now = dayjs();
+  let today = now.startOf('day');
+  const gloc = new GeoLocation('Jerusalem', 31.783, 35.233, 0, 'Asia/Jerusalem');
+  const zmanim = new Zmanim(gloc, now.toDate());
+  sunset = zmanim.sunset();
+  const isAfterSunset = now.isAfter(sunset);
   if (isAfterSunset) {
     today = today.add(1, 'days');
-    setupHebrewDate();
   }
-
-  omer = todayHebrewObj.omer();
+  const omer = HebrewCalendar.calendar({
+    start: today.toDate(),
+    end: today.toDate(),
+    omer: true
+  })
+    .find((event) => event.omer)
+    ?.omer;
 
   chrome.action.setBadgeText({ text: omer ? omer.toString() : '' });
   chrome.action.setBadgeBackgroundColor({ color: '#666' });
@@ -31,6 +34,6 @@ function setCron () {
   setTimeout(function () {
     setup();
     setCron();
-  }, todayHebrewObj.sunset() - new Date());
+  }, sunset - new Date());
 }
 setCron();

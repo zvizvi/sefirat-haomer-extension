@@ -1,20 +1,14 @@
 {
-  "update_url": "https://clients2.google.com/service/update2/crx",
   "name": "ספירת העומר",
-  "version": "1.0.2",
+  "version": "1.0.3",
+  "description": "Show daily Sefirat Haomer in your browser",
+  "manifest_version": 3,
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "homepage_url": "https://zvizvi.xyz",
   "author": "zvizvi5@outlook.com",
-  "browser_action": {
+  "action": {
     "default_icon": "img/icon16.png",
     "default_popup": "html/popup.html"
-  },
-  "icons": {
-    "128": "img/icon128.png",
-    "96": "img/icon96.png",
-    "72": "img/icon72.png",
-    "64": "img/icon64.png",
-    "48": "img/icon48.png",
-    "24": "img/icon24.png",
-    "16": "img/icon16.png"
   },
   "permissions": [
     "storage"
@@ -22,12 +16,17 @@
   "options_ui": {
     "page": "html/options.html"
   },
-  "background": {
-    "scripts": [
-      "assets/moment/moment-with-locales.min.js",
-      "assets/hebcal/hebcal.noloc.min.js",
-      "js/background.js"
-    ]
+  "icons": {
+    "128": "img/icon128.png",
+    "96": "img/icon96.png",
+    "72": "img/icon72.png",
+    "64": "img/icon64.png",
+    "48": "img/icon48.png",
+    "32": "img/icon32.png",
+    "24": "img/icon24.png",
+    "16": "img/icon16.png"
   },
-  "manifest_version": 2
+  "background": {
+    "service_worker": "js/background.js"
+  }
 }
