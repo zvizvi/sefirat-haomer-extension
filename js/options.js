@@ -1,31 +1,25 @@
 /* global chrome */
 
 // Current options extend defaults
-let defaultOptions = {
+const defaultOptions = {
   nusach: 'sf'
 };
 let options;
 
 // Load options from storage
-const load = function () {
-  return new Promise((resolve) => {
-    chrome.storage.sync.get('options', (storage) => {
-      // Get and save options
-      options = storage.options || defaultOptions;
-
-      // Show and resolve
-      show(options);
-      resolve(options);
-    });
-  });
+const load = async function () {
+  const storage = await chrome.storage.sync.get('options');
+  // Get and save options
+  options = storage.options || defaultOptions;
+  // Show and resolve
+  show(options);
+  return options;
 };
 
 // Save options to storage
-const save = function (object) {
-  return new Promise((resolve) => {
-    chrome.storage.sync.set({
-      'options': object
-    }, resolve);
+const save = async function (object) {
+  return chrome.storage.sync.set({
+    options: object
   });
 };
 
@@ -48,11 +42,9 @@ const show = function (options) {
 };
 
 // Reset to defaults
-const reset = function () {
-  save(defaultOptions)
-    .then(() => {
-      show(defaultOptions);
-    });
+const reset = async function () {
+  await save(defaultOptions);
+  show(defaultOptions);
 };
 
 // On change, save

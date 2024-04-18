@@ -3,7 +3,6 @@ body {
   margin: 0;
   padding: 15px 10px;
   text-align: center;
-  -webkit-user-select: none;
   user-select: none;
 }
 

@@ -9,32 +9,32 @@ $(document).ready(function () {
     chrome.runtime.openOptionsPage();
   });
 
-  var moment = window.moment;
-  var Hebcal = window.Hebcal;
-  var options, today, todayHebrewObj, isAfterSunset, todayHebrew, todayOmer;
-  var defaultOptions = {
+  const moment = window.moment;
+  const Hebcal = window.Hebcal;
+  let options, today, todayHebrewObj, isAfterSunset, todayHebrew, todayOmer;
+  const defaultOptions = {
     nusach: 'sf'
   };
 
-  var numberLetterList = {
-    '1': 'אֶחָד',
-    '2': 'שְׁנֵי',
+  const numberLetterList = {
+    1: 'אֶחָד',
+    2: 'שְׁנֵי',
     '2a': 'שְׁנַיִם',
-    '3': 'שְׁלֹשָׁה',
-    '4': 'אַרְבָּעָה',
-    '5': 'חֲמִשָּׁה',
-    '6': 'שִׁשָּׁה',
-    '7': 'שִׁבְעָה',
-    '8': 'שְׁמוֹנָה',
-    '9': 'תִּשְׁעָה',
-    '10': 'עָשָׂר',
-    '11': 'אַחַד עָשָׂר',
-    '12': 'שְׁנֵים עָשָׂר',
-    '20': 'עֶשְׂרִים',
-    '30': 'שְׁלֹשִׁים',
-    '40': 'אַרְבָּעִים'
+    3: 'שְׁלֹשָׁה',
+    4: 'אַרְבָּעָה',
+    5: 'חֲמִשָּׁה',
+    6: 'שִׁשָּׁה',
+    7: 'שִׁבְעָה',
+    8: 'שְׁמוֹנָה',
+    9: 'תִּשְׁעָה',
+    10: 'עָשָׂר',
+    11: 'אַחַד עָשָׂר',
+    12: 'שְׁנֵים עָשָׂר',
+    20: 'עֶשְׂרִים',
+    30: 'שְׁלֹשִׁים',
+    40: 'אַרְבָּעִים'
   };
-  var sefiraList = ['חסד', 'גבורה', 'תפארת', 'נצח', 'הוד', 'יסוד', 'מלכות'];
+  const sefiraList = ['חסד', 'גבורה', 'תפארת', 'נצח', 'הוד', 'יסוד', 'מלכות'];
 
   moment.locale('he');
 
@@ -56,16 +56,16 @@ $(document).ready(function () {
     todayHebrew = todayHebrewObj.toString('h');
     todayOmer = todayHebrewObj.omer();
 
-    var weekDay = isAfterSunset || today.hour() < 5 ? 'אור ל' : '';
+    let weekDay = isAfterSunset || today.hour() < 5 ? 'אור ל' : '';
     weekDay += 'יום ' + today.format('dddd');
     $('.week-day').text(weekDay);
     $('.hebrew-date').text(todayHebrew);
 
-    chrome.browserAction.setBadgeText({ text: todayOmer ? todayOmer.toString() : '' });
+    chrome.action.setBadgeText({ text: todayOmer ? todayOmer.toString() : '' });
   }
 
   function getDays (number) {
-    var day;
+    let day;
 
     if (number === 1) {
       day = 'יוֹם אֶחָד';
@@ -77,7 +77,7 @@ $(document).ready(function () {
       if ([11, 12, 20, 30, 40].indexOf(number) >= 0) {
         day = numberLetterList[number];
       } else {
-        var stringNumber = number.toString();
+        const stringNumber = number.toString();
         day = (numberLetterList[stringNumber[1] + 'a'] || numberLetterList[stringNumber[1]]);
         day += ' ';
         day += (stringNumber[0] === '3') ? 'וּ' : (number > 20) ? 'וְ' : '';
@@ -89,8 +89,8 @@ $(document).ready(function () {
   }
 
   function writeDays () {
-    var day = getDays(todayOmer);
-    var suffix = '';
+    const day = getDays(todayOmer);
+    let suffix = '';
     if (todayOmer && todayOmer < 7) {
       suffix = options.nusach === 'sf' ? ' לָעוֹמֶר' : options.nusach === 'as' ? ' בָּעוֹמֶר' : '';
     }
@@ -104,9 +104,9 @@ $(document).ready(function () {
     if (todayOmer < 7) {
       return;
     }
-    var weeks = Math.floor(todayOmer / 7);
-    var leftDays = (todayOmer % 7);
-    var week = 'שֶׁהֵם ';
+    const weeks = Math.floor(todayOmer / 7);
+    const leftDays = (todayOmer % 7);
+    let week = 'שֶׁהֵם ';
 
     if (weeks === 1) {
       week += 'שָׁבוּעַ אֶחָד ';
@@ -127,7 +127,7 @@ $(document).ready(function () {
       week += getDays(leftDays);
     }
 
-    var suffix = (options.nusach === 'sf' ? ' לָעוֹמֶר' : options.nusach === 'as' ? ' בָּעוֹמֶר' : '');
+    const suffix = (options.nusach === 'sf' ? ' לָעוֹמֶר' : options.nusach === 'as' ? ' בָּעוֹמֶר' : '');
     $('.week').text(week + suffix);
   }
 
@@ -135,7 +135,7 @@ $(document).ready(function () {
     if (!todayOmer) {
       return;
     }
-    var todaySefira = (sefiraList[(todayOmer % 7) - 1] || sefiraList[6]);
+    let todaySefira = (sefiraList[(todayOmer % 7) - 1] || sefiraList[6]);
     todaySefira += ' שב';
     if (todayOmer % 7) {
       todaySefira += sefiraList[Math.floor(todayOmer / 7)];
@@ -164,14 +164,15 @@ $(document).ready(function () {
 
   setupDate();
   toggleNoOmer();
-  chrome.storage.sync.get('options', function (storage) {
-    options = storage.options || defaultOptions;
+  chrome.storage.sync.get('options')
+    .then((storage) => {
+      options = storage.options || defaultOptions;
 
-    writeDays();
-    writeWeeks();
-    getSefira();
-    lagBaomer();
+      writeDays();
+      writeWeeks();
+      getSefira();
+      lagBaomer();
 
-    $('.website-link a').attr('href', $('.website-link a').attr('href') + options.nusach);
-  });
+      $('.website-link a').attr('href', $('.website-link a').attr('href') + options.nusach);
+    });
 });

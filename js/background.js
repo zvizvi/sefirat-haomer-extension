@@ -1,8 +1,8 @@
 /* global chrome */
-var moment = window.moment;
-var Hebcal = window.Hebcal;
+const moment = window.moment;
+const Hebcal = window.Hebcal;
 
-var today, todayHebrewObj, isAfterSunset, omer;
+let today, todayHebrewObj, isAfterSunset, omer;
 
 function setupHebrewDate () {
   todayHebrewObj = Hebcal.HDate(new Date(today.toISOString()));
@@ -21,8 +21,8 @@ function setup () {
 
   omer = todayHebrewObj.omer();
 
-  chrome.browserAction.setBadgeText({ text: omer ? omer.toString() : '' });
-  chrome.browserAction.setBadgeBackgroundColor({ color: '#666' });
+  chrome.action.setBadgeText({ text: omer ? omer.toString() : '' });
+  chrome.action.setBadgeBackgroundColor({ color: '#666' });
   setTimeout(setup, 43200000); // 12 hours.
 }
 setup();
