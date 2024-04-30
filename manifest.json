@@ -1,7 +1,7 @@
 {
   "name": "ספירת העומר",
-  "version": "1.0.3",
-  "description": "Show daily Sefirat Haomer in your browser",
+  "version": "1.0.4",
+  "description": "הצג את ספירת העומר היומית בדפדפן",
   "manifest_version": 3,
   "update_url": "https://clients2.google.com/service/update2/crx",
   "homepage_url": "https://zvizvi.xyz",
