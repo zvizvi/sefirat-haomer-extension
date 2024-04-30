@@ -28,12 +28,20 @@ function setup () {
   chrome.action.setBadgeBackgroundColor({ color: '#666' });
   setTimeout(setup, 43200000); // 12 hours.
 }
-setup();
 
 function setCron () {
-  setTimeout(function () {
+  setTimeout(() => {
     setup();
     setCron();
   }, sunset - new Date());
 }
-setCron();
+
+chrome.runtime.onInstalled.addListener(()=> {
+  setup();
+  setCron();
+});
+
+chrome.runtime.onStartup.addListener(()=> {
+  setup();
+  setCron();
+});
