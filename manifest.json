@@ -1,6 +1,6 @@
 {
   "name": "ספירת העומר",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "הצג את ספירת העומר היומית בדפדפן",
   "manifest_version": 3,
   "update_url": "https://clients2.google.com/service/update2/crx",
